@@ -30,14 +30,14 @@ Func Main()
 	; Check if Notes is already open (sometimes it tries to open even with another instance active,
 	;	forcing the user to close the processes using the Task Manager)
 	If WinExists($winIdentifierName, "") And Number($insertPasswordAfter) <= 0 Then
-		MsgBox($MB_ICONINFORMATION + $MB_SYSTEMMODAL, 'Notes già in esecuzione', _ 
-			'Impossibile aprire una nuova istanza di Lotus Notes' & @CRLF & @CRLF & 'Notes già in esecuzione' _ 
+		MsgBox($MB_ICONINFORMATION + $MB_SYSTEMMODAL, 'Notes process was found', _ 
+			'Cannot start new instance of Lotus Notes: Notes is already active.' & @CRLF & @CRLF & 'Check your processes' _ 
 		)
 
 		Exit 1
 	ElseIf Not WinExists($winIdentifierName, "") And Number($insertPasswordAfter) > 0 Then
 		MsgBox($MB_ICONERROR + $MB_SYSTEMMODAL, 'Insert Password delayed mode ERROR', _ 
-			'Cannot auto-type whitout note open' & @CRLF & @CRLF & '' _ 
+			'Cannot auto-type if Notes is not open' & @CRLF & @CRLF & '' _ 
 		)
 
 		Exit 1
@@ -61,7 +61,10 @@ EndFunc
 
 
 #CS
-	Parses parameters by using the GetOpt.au3﻿ UDF
+	Parses parameters by using the GetOpt.au3 UDF
+
+	For parameters containing a space: '"Program Files"'
+
 	
 	Parameters available:
 		-p/--password								Specify password
@@ -71,13 +74,13 @@ EndFunc
 		-w/--wait-input				OPTIONAL		Don't press ENTER after the password
 		-x/--debug					OPTIONAL		Debug mode, Show MsgBox with data useful for debugging
 		-h/--help					OPTIONAL		Show Help MsgBox
-		-t/--timeout				OPTIONAL		Show Help MsgBox
+		-t/--timeout				OPTIONAL		Types the password after the defined timeout (in ms)
 #CE
 Func parseCmdParams ()
 	Local $sOpt, $sSubOpt, $sOper, $sMsg, $sHelpText
     Local $aOpts[8][3] = [ _
         ['-p', '--password', $GETOPT_REQUIRED_ARGUMENT], _
-        ['-d', '--notes-directory', $GETOPT_REQUIRED_ARGUMENT], _
+        ['-d', '--directory', $GETOPT_REQUIRED_ARGUMENT], _
         ['-h', '--help', True], _
         ['-u', '--user-name', $GETOPT_REQUIRED_ARGUMENT], _
         ['-l', '--location', $GETOPT_REQUIRED_ARGUMENT], _
@@ -86,13 +89,19 @@ Func parseCmdParams ()
         ['-t', '--timeout', True] _
     ]
 	
-	$sHelpText='Utilizzo script login automatico Lotus Notes:' & @CRLF & @CRLF & _
-				'- ' & @Scriptname & ' -p=inserisci_qui_la_tua_password' & @CRLF & @CRLF & _ 
+	$sHelpText='Usage script for automatic Login for Lotus Notes:' & @CRLF & @CRLF & _
+				'- ' & @Scriptname & ' -p=your_password' & @CRLF & @CRLF & _ 
 				'OPPURE' & @CRLF & @CRLF & _ 
-				'- ' & @Scriptname & ' --password=inserisci_qui_la_tua_password' & @CRLF & @CRLF & @CRLF & @CRLF & _ 
-				'Altri comandi:' & @CRLF & @CRLF & _ 
-				'-x/--debug - Attiva la modalità debug' & @CRLF & _ 
-				'-h/--help - Mostra questo messaggio di aiuto'
+				'- ' & @Scriptname & ' --password=your_password' & @CRLF & @CRLF & @CRLF & @CRLF & _ 
+				'Other:' & @CRLF & @CRLF & _ 
+				'-d/--directory - Specify the directory where to search the executable' & @CRLF & _ 
+				'-u/--username - Specify the USERNAME to use' & @CRLF & _ 
+				'-l/--location - Specify the Location' & @CRLF & _ 
+				'-t/--timeout - Sets a timeout after which the password will be sent' & @CRLF & _ 
+				'-w/--wait-input - Only insert password, does not click on the "Ok" button' & @CRLF & _ 
+				'-x/--debug - Enables debug mode' & @CRLF & _ 
+				'-h/--help - Shows this help message' & @CRLF & @CRLF & @CRLF & @CRLF & _
+				'More info on:' & @CRLF & 'https://github.com/LukeSavefrogs/notesAutoPass'
 				
 				
 	_GetOpt_Set($aOpts)
@@ -149,7 +158,7 @@ Func parseCmdParams ()
 					$insertPasswordAfter = $GetOpt_Arg
 					
                 Case 'h' ; Help section
-                    MsgBox($MB_ICONQUESTION + $MB_SYSTEMMODAL, 'HELP', $sHelpText)
+                    MsgBox($MB_ICONQUESTION + $MB_SYSTEMMODAL, 'Help for Notes autoPass', $sHelpText)
                     
 					Exit 0
 					
@@ -196,12 +205,12 @@ Func openNotes($password)
 	Local $sButtonLocationIdentifier = "[CLASS:ComboBox; INSTANCE:2]" ; Location 
 	
 
-	Run ($directoryNotes)			; Apre Notes 
-	WinWait($winIdentifierName)		; Aspetta che Notes venga aperto
+	Run ($directoryNotes)			; Open Notes 
+	WinWait($winIdentifierName)		; Wait for Notes to be open
 
 	
-	If Not WinActive($winIdentifierName) Then WinActivate($winIdentifierName, "") 		; Una volta aperto Notes lo porta in primo piano
-	WinWaitActive($winIdentifierName,"") 		; Aspetta che Notes sia effettivamente in primo piano
+	If Not WinActive($winIdentifierName) Then WinActivate($winIdentifierName, "") 		; Once open, put it in foreground
+	WinWaitActive($winIdentifierName,"") 		; Wait until Notes is in foreground
 
 
 	
@@ -261,8 +270,8 @@ Func openNotes($password)
 	
 	If $debugMode == True Then 
 		MsgBox($MB_ICONWARNING + $MB_SYSTEMMODAL, 'Debug mode', _ 
-			"Password ricevuta: " & $password & @CRLF & @CRLF & _ 
-			"Password inserita: " & $sanitizedPassword)
+			"Password received: " & $password & @CRLF & @CRLF & _ 
+			"Password sent: " & $sanitizedPassword)
 	EndIf
 	
 	
