@@ -1,5 +1,5 @@
 ; From: https://www.autoitscript.com/forum/topic/143167-getopt-udf-to-parse-the-command-line/
-#include <GetOpt.au3>
+#include <./Dependencies/GetOpt.au3>
 
 #include <MsgBoxConstants.au3>
 #include <TrayConstants.au3>
@@ -68,8 +68,8 @@ EndFunc
 	
 	Parameters available:
 		-p/--password								Specify password
-		-d/--notes-directory		OPTIONAL		Set Notes executable path
-		-u/--user-name				OPTIONAL		Set User ID
+		-d/--directory				OPTIONAL		Set Notes executable path
+		-u/--username				OPTIONAL		Set User ID
 		-l/--location				OPTIONAL		Set Location
 		-w/--wait-input				OPTIONAL		Don't press ENTER after the password
 		-x/--debug					OPTIONAL		Debug mode, Show MsgBox with data useful for debugging
@@ -82,7 +82,7 @@ Func parseCmdParams ()
         ['-p', '--password', $GETOPT_REQUIRED_ARGUMENT], _
         ['-d', '--directory', $GETOPT_REQUIRED_ARGUMENT], _
         ['-h', '--help', True], _
-        ['-u', '--user-name', $GETOPT_REQUIRED_ARGUMENT], _
+        ['-u', '--username', $GETOPT_REQUIRED_ARGUMENT], _
         ['-l', '--location', $GETOPT_REQUIRED_ARGUMENT], _
         ['-w', '--wait-input', True], _
         ['-x', '--debug', True], _
