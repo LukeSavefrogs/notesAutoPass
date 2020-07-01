@@ -7,7 +7,6 @@ I'm sick of having to open Keepass just to make it autotype my password into Not
 That's why i created this script that opens Notes and types the password right away :)
 
 ## Usage
-### Open Notes with password
 To use this script you just need to call it with the `-p` parameter. Example: 
 ```
 "C:\Users\Luca Salvarani\Desktop\Script\notesOpen.exe" -p=your_password
@@ -18,7 +17,7 @@ If the **password** or any other parameter value contains a <kbd>SPACE</kbd> cha
 ```
 
 There are several ways you can use this script:
-- Create a desktop shortcut
+- Create a desktop shortcut (with the )
 - Add an alias on your CLI of choice
 
 ## Options
@@ -33,9 +32,9 @@ There are several ways you can use this script:
 	<tbody>
 		<tr>
 			<td>
-				<code style='white-space: nowrap;'>-p</code> 
+				<nobr><code>-p</code></nobr>
 				<br>
-				<code style='white-space: nowrap;'>--password</code>
+				<nobr><code>--password</code></nobr>
 			</td>
 			<td>REQUIRED</td>
 			<td>
@@ -44,24 +43,24 @@ There are several ways you can use this script:
 		</tr>
 		<tr>
 			<td>
-				<code style='white-space: nowrap;'>-d</code>
+				<nobr><code>-d</code></nobr>
 				<br>
-				<code style='white-space: nowrap;'>--directory</code>
+				<nobr><code>--directory</code></nobr>
 			</td>
 			<td>OPTIONAL</td>
 			<td>
 				If you proceeded to a custom installation, you may have installed Notes in a custom path. 
 				<br><br>
-				This parameter lets you define the directory where is located the <code>notes.exe</code> executable file (<span style='font-style: italic'>default is <code>C:\Program Files (x86)\IBM\Notes\notes.exe</code></span>)
+				This parameter lets you define the directory where is located the <code>notes.exe</code> executable file (<i>default is <code>C:\Program Files (x86)\IBM\Notes\notes.exe</code></i>)
 				<br><br>
 				To specify a path containing a space character enclose it first in single quotes, then in double quotes, like this: <code>-d='"C:\My Custom Path\IBM\Notes\"'</code>
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<code style='white-space: nowrap;'>-u</code>
+				<nobr><code>-u</code></nobr>
 				<br>
-				<code style='white-space: nowrap;'>--username</code>
+				<nobr><code>--username</code></nobr>
 			</td>
 			<td>OPTIONAL</td>
 			<td>
@@ -77,9 +76,9 @@ There are several ways you can use this script:
 		</tr>
 		<tr>
 			<td>
-				<code style='white-space: nowrap;'>-l</code>
+				<nobr><code>-l</code></nobr>
 				<br>
-				<code style='white-space: nowrap;'>--location</code>
+				<nobr><code>--location</code></nobr>
 			</td>
 			<td>OPTIONAL</td>
 			<td>
@@ -95,9 +94,9 @@ There are several ways you can use this script:
 		</tr>
 		<tr>
 			<td>
-				<code style='white-space: nowrap;'>-w</code>
+				<nobr><code>-w</code></nobr>
 				<br>
-				<code style='white-space: nowrap;'>--wait-input</code>
+				<nobr><code>--wait-input</code></nobr>
 			</td>
 			<td>OPTIONAL</td>
 			<td>
@@ -106,9 +105,9 @@ There are several ways you can use this script:
 		</tr>
 		<tr>
 			<td>
-				<code style='white-space: nowrap;'>-t</code>
+				<nobr><code>-t</code></nobr>
 				<br>
-				<code style='white-space: nowrap;'>--timeout</code>
+				<nobr><code>--timeout</code></nobr>
 			</td>
 			<td>OPTIONAL</td>
 			<td>
@@ -117,9 +116,9 @@ There are several ways you can use this script:
 		</tr>
 		<tr>
 			<td>
-				<code style='white-space: nowrap;'>-x</code>
+				<nobr><code>-x</code></nobr>
 				<br>
-				<code style='white-space: nowrap;'>--debug</code>
+				<nobr><code>--debug</code></nobr>
 			</td>
 			<td>OPTIONAL</td>
 			<td>
@@ -128,9 +127,9 @@ There are several ways you can use this script:
 		</tr>
 		<tr>
 			<td>
-				<code style='white-space: nowrap;'>-h</code>
+				<nobr><code>-h</code></nobr>
 				<br>
-				<code style='white-space: nowrap;'>--help</code>
+				<nobr><code>--help</code></nobr>
 			</td>
 			<td>OPTIONAL</td>
 			<td>
