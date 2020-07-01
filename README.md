@@ -6,19 +6,24 @@ I'm sick of having to open Keepass just to make it autotype my password into Not
 
 That's why i created this script that opens Notes and types the password right away :)
 
-## Usage
-To use this script you just need to call it with the `-p` parameter. Example: 
-```
-"C:\Users\Luca Salvarani\Desktop\Script\notesOpen.exe" -p=your_password
-```
+## Installation and Usage
+1. **Download** the executable [here](https://github.com/LukeSavefrogs/notesAutoPass/releases) and place it in a folder of your choice (_in my case it will be `C:\Users\Luca Salvarani\Desktop\Script\notesOpen.exe`_)
+
+2. Now just **launch** it making sure to specify the password with the **`-p` parameter** (otherwise it will print an error and exit).   
+   Example: 
+	- In the field "Destination" of a **shorcut** or in a **CLI** applicaion (Command Prompt, PowerShell): 
+		```
+		"C:\Users\Luca Salvarani\Desktop\Script\notesOpen.exe" -p=your_password
+		```
+	- Inside **Cygwin**:
+		```
+		$(cygpath -u "C:\Users\Luca Salvarani\Desktop\Script\notesOpen.exe") -p=your_password
+		```
+### Pay attention to spaces
 If the **password** or any other parameter value contains a <kbd>SPACE</kbd> character, make sure to enclose it first in single quotes, then in double quotes. Example:
 ```
 "C:\Users\Luca Salvarani\Desktop\Script\notesOpen.exe" -p='"your password with spaces"'
 ```
-
-There are several ways you can use this script:
-- Create a desktop shortcut (with the )
-- Add an alias on your CLI of choice
 
 ## Options
 <table>
