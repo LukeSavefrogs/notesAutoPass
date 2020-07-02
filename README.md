@@ -1,5 +1,5 @@
 # Notes autoPass
-This project aims to provide **password auto-typing** for **IBM Notes** (former Lotus Notes) on **Windows** only
+This little script written in [AutoIt](https://www.autoitscript.com/site/) aims to provide **password auto-typing** for **IBM Notes** (former Lotus Notes) on **Windows** only
 
 ## Introduction
 I'm sick of having to open Keepass just to make it autotype my password into Notes login form (*yes... it doesn't allow pasting*).

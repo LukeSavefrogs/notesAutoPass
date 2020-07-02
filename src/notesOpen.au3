@@ -1,5 +1,5 @@
 ; From: https://www.autoitscript.com/forum/topic/143167-getopt-udf-to-parse-the-command-line/
-#include <./Dependencies/GetOpt.au3>
+#include <./dependencies/GetOpt.au3>
 
 #include <MsgBoxConstants.au3>
 #include <TrayConstants.au3>
