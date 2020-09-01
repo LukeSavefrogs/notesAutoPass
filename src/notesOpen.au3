@@ -22,6 +22,7 @@ Func Main()
 	
 	Global $sUserName = ""
 	Global $sLocation = ""
+	Global $forceStart = False
 	
 	
 	parseCmdParams()
@@ -42,17 +43,27 @@ Func Main()
 
 		Exit 1
 	EndIf
+
+	If $debugMode == True Then 
+		MsgBox($MB_ICONWARNING + $MB_SYSTEMMODAL, 'Debug mode', _ 
+			"Notes Path: " & $directoryNotes & @CRLF & @CRLF & _ 
+			"File Exists: " & FileExists($directoryNotes) & @CRLF & @CRLF & _ 
+			"Notes executable in path: " & StringInStr($directoryNotes, "notes.exe", $STR_NOCASESENSEBASIC))
+	EndIf
 	
 	; Se non trova l'eseguibile di Notes sotto il path nella variabile $directoryNotes mostra un errore a video ed esce
-	If Not FileExists($directoryNotes) Or Not StringInStr($directoryNotes, "notes.exe", 2) Then
+	If $forceStart <> True And (Not FileExists($directoryNotes) Or Not StringInStr($directoryNotes, "notes.exe", $STR_NOCASESENSEBASIC)) Then
 		MsgBox($MB_SYSTEMMODAL + $MB_ICONERROR + $MB_SETFOREGROUND, "ERROR", _
 			'Notes executable not found under path: ' & $directoryNotes _
 		)
+
+		TrayTip ( "Debug mode", "Notes executable not found", 0, $TIP_ICONHAND )
 		
 		Exit 2	
 	EndIf
 	
-	
+	TrayTip ( "Debug message", "Starting Notes", 0, $TIP_ICONASTERISK )
+
 	openNotes($password)
 	Exit 0
 EndFunc
@@ -78,12 +89,13 @@ EndFunc
 #CE
 Func parseCmdParams ()
 	Local $sOpt, $sSubOpt, $sOper, $sMsg, $sHelpText
-    Local $aOpts[8][3] = [ _
+    Local $aOpts[9][3] = [ _
         ['-p', '--password', $GETOPT_REQUIRED_ARGUMENT], _
         ['-d', '--directory', $GETOPT_REQUIRED_ARGUMENT], _
         ['-h', '--help', True], _
         ['-u', '--username', $GETOPT_REQUIRED_ARGUMENT], _
         ['-l', '--location', $GETOPT_REQUIRED_ARGUMENT], _
+        ['-f', '--force-start', True], _
         ['-w', '--wait-input', True], _
         ['-x', '--debug', True], _
         ['-t', '--timeout', True] _
@@ -98,6 +110,7 @@ Func parseCmdParams ()
 				'-u/--username - Specify the USERNAME to use' & @CRLF & _ 
 				'-l/--location - Specify the Location' & @CRLF & _ 
 				'-t/--timeout - Sets a timeout after which the password will be sent' & @CRLF & _ 
+				'-f/--force-start - Starts notes without checking for executable existence' & @CRLF & _ 
 				'-w/--wait-input - Only insert password, does not click on the "Ok" button' & @CRLF & _ 
 				'-x/--debug - Enables debug mode' & @CRLF & _ 
 				'-h/--help - Shows this help message' & @CRLF & @CRLF & @CRLF & @CRLF & _
@@ -108,7 +121,7 @@ Func parseCmdParams ()
 	
     If 0 < $GetOpt_Opts[0] Then
         While 1
-            $sOpt = _GetOpt('p:d:xu:l:wt:h')
+            $sOpt = _GetOpt('p:d:xu:l:wt:hf')
 			
             If Not $sOpt Then ExitLoop
 			
@@ -144,6 +157,9 @@ Func parseCmdParams ()
 				
 				Case 'w' ; Custom parameter (parameter_name = $GetOpt_Opt , value = $GetOpt_Arg)
 					$waitForUserInput = True
+					
+				Case 'f' ; Custom parameter (parameter_name = $GetOpt_Opt , value = $GetOpt_Arg)
+					$forceStart = True
 					
 				Case 'x' ; Custom parameter (parameter_name = $GetOpt_Opt , value = $GetOpt_Arg)
 					; Activate Debug mode
