@@ -9,9 +9,10 @@ That's why i created this script that opens Notes and types the password right a
 ## Installation and Usage
 1. **Download** the executable [here](https://github.com/LukeSavefrogs/notesAutoPass/releases) and place it in a folder of your choice (_in my case it will be `C:\Users\Luca Salvarani\Desktop\Script\notesOpen.exe`_)
 
-2. Now just **launch** it making sure to specify the password with the **`-p` parameter** (otherwise it will print an error and exit).   
+2. Now just **launch** it making sure to **specify the password** with the **`-p` parameter** (otherwise it will print an error and exit).   
+
    Example: 
-	- In the field "Destination" of a **shorcut** or in a **CLI** applicaion (Command Prompt, PowerShell): 
+	- In the field "Destination" of a **Windows shorcut** or in a **CLI** applicaion (Command Prompt, PowerShell): 
 		```
 		"C:\Users\Luca Salvarani\Desktop\Script\notesOpen.exe" -p=your_password
 		```
@@ -20,7 +21,9 @@ That's why i created this script that opens Notes and types the password right a
 		$(cygpath -u "C:\Users\Luca Salvarani\Desktop\Script\notesOpen.exe") -p=your_password
 		```
 ### Pay attention to spaces
-If the **password** or any other parameter value contains a <kbd>SPACE</kbd> character, make sure to enclose it first in single quotes, then in double quotes. Example:
+If the **password** or any other parameter value contains a <kbd>SPACE</kbd> character, make sure to **enclose** it first in **single quotes**, then in **double quotes**.  
+
+Example:
 ```
 "C:\Users\Luca Salvarani\Desktop\Script\notesOpen.exe" -p='"your password with spaces"'
 ```
